@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ca.senecacollege.application.hotelmanagementsystem.controller.AdminController"
+            prefWidth="1400" prefHeight="900"
+            style="-fx-background-color: #ffffff;">
+
+    <!-- ═══ TOP BAR ═══ -->
+    <HBox alignment="CENTER_LEFT" spacing="16"
+          AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          prefHeight="68"
+          style="-fx-background-color: #ffffff;
+                 -fx-border-color: transparent transparent #e8e0d0 transparent;
+                 -fx-border-width: 0 0 1.5 0;
+                 -fx-padding: 0 40;">
+        <Label fx:id="adminTitleLabel" text="AURORA GRAND HOTEL"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;
+                      -fx-text-fill: #1a1a1a; -fx-letter-spacing: 2px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Admin Portal"
+               style="-fx-font-size: 12px; -fx-text-fill: #c9a84c; -fx-letter-spacing: 1px;"/>
+        <Button text="Settings" onAction="#handleSettings"
+                style="-fx-background-color: #fafafa;
+                       -fx-text-fill: #555555;
+                       -fx-border-color: #e0d8cc;
+                       -fx-border-width: 1;
+                       -fx-border-radius: 6; -fx-background-radius: 6;
+                       -fx-font-size: 12px; -fx-padding: 7 16; -fx-cursor: hand;"/>
+        <Button text="Log Out" onAction="#handleLogout"
+                style="-fx-background-color: #ffffff;
+                       -fx-text-fill: #c9a84c;
+                       -fx-border-color: #c9a84c;
+                       -fx-border-width: 1.5;
+                       -fx-border-radius: 6; -fx-background-radius: 6;
+                       -fx-font-size: 12px; -fx-padding: 7 16; -fx-cursor: hand;"/>
+    </HBox>
+
+    <!-- ═══ MAIN TAB PANE ═══ -->
+    <TabPane tabClosingPolicy="UNAVAILABLE"
+             AnchorPane.topAnchor="68" AnchorPane.leftAnchor="0"
+             AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+             style="-fx-background-color: #f7f5f0;
+                    -fx-tab-min-width: 120;
+                    -fx-tab-max-width: 160;">
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 1: DASHBOARD                   -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Dashboard">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="Dashboard"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <!-- Search bar -->
+                    <VBox spacing="14"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 20;">
+                        <Label text="Search / Filters"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold;
+                                      -fx-text-fill: #555555;"/>
+                        <HBox spacing="16" alignment="CENTER_LEFT">
+                            <Label text="Name:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <TextField fx:id="dashNameFilter" promptText="Guest name" prefWidth="180"
+                                       style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                              -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                            <Label text="Phone:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <TextField fx:id="dashPhoneFilter" promptText="Phone" prefWidth="160"
+                                       style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                              -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                            <Label text="Date:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <DatePicker fx:id="dashDateFilter" prefWidth="170"/>
+                        </HBox>
+                        <HBox spacing="16" alignment="CENTER_LEFT">
+                            <Label text="Status:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <ComboBox fx:id="dashStatusFilter" prefWidth="130"/>
+                            <Label text="Room Type:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <ComboBox fx:id="dashRoomTypeFilter" prefWidth="130"/>
+                            <Button text="Search" onAction="#handleDashboardSearch"
+                                    style="-fx-background-color: #ffffff;
+                                           -fx-text-fill: #c9a84c;
+                                           -fx-border-color: #c9a84c;
+                                           -fx-border-width: 1.5;
+                                           -fx-border-radius: 6; -fx-background-radius: 6;
+                                           -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                            <Button text="Reset" onAction="#handleDashboardReset"
+                                    style="-fx-background-color: #fafafa;
+                                           -fx-text-fill: #888888;
+                                           -fx-border-color: #e0d8cc;
+                                           -fx-border-width: 1;
+                                           -fx-border-radius: 6; -fx-background-radius: 6;
+                                           -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Table -->
+                    <VBox spacing="12"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 20;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="Reservations"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="+ New Reservation" onAction="#handleNewReservation"
+                                    style="-fx-background-color: #c9a84c;
+                                           -fx-text-fill: #ffffff;
+                                           -fx-font-size: 12px; -fx-font-weight: bold;
+                                           -fx-padding: 8 16;
+                                           -fx-background-radius: 6; -fx-cursor: hand;"/>
+                        </HBox>
+                        <TableView prefHeight="300"
+                                   style="-fx-border-color: #e8e0d0; -fx-border-radius: 6;">
+                            <columns>
+                                <TableColumn text="Guest Name" prefWidth="160"/>
+                                <TableColumn text="Phone" prefWidth="120"/>
+                                <TableColumn text="Room" prefWidth="100"/>
+                                <TableColumn text="Check-in" prefWidth="110"/>
+                                <TableColumn text="Check-out" prefWidth="110"/>
+                                <TableColumn text="Status" prefWidth="110"/>
+                                <TableColumn text="Balance" prefWidth="100"/>
+                                <TableColumn text="Actions" prefWidth="160"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="No reservations found."
+                                       style="-fx-text-fill: #aaaaaa;"/>
+                            </placeholder>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 2: RESERVATIONS                -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Reservations">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="New Reservation"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <HBox spacing="24" alignment="TOP_LEFT">
+
+                        <!-- Guest info + booking form -->
+                        <VBox spacing="18" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #ffffff;
+                                     -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                     -fx-border-radius: 10; -fx-background-radius: 10;
+                                     -fx-padding: 24;">
+
+                            <Label text="Guest Info"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;
+                                          -fx-text-fill: #c9a84c; -fx-letter-spacing: 1px;"/>
+
+                            <HBox spacing="16">
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="First Name" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <TextField fx:id="resFirstName" promptText="First name"
+                                               style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                                      -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                </VBox>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="Last Name" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <TextField fx:id="resLastName" promptText="Last name"
+                                               style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                                      -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                </VBox>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="Phone" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <TextField fx:id="resPhone" promptText="Phone"
+                                               style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                                      -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                </VBox>
+                            </HBox>
+
+                            <HBox spacing="16">
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="Email" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <TextField fx:id="resEmail" promptText="Email"
+                                               style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                                      -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                </VBox>
+                                <VBox spacing="5" alignment="CENTER_LEFT">
+                                    <Label text="Loyalty Member" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <CheckBox fx:id="resLoyaltyStatus" text="Is Member"/>
+                                </VBox>
+                            </HBox>
+
+                            <HBox spacing="16">
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="Check-in" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="resCheckIn" maxWidth="Infinity"/>
+                                </VBox>
+                                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                    <Label text="Check-out" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="resCheckOut" maxWidth="Infinity"/>
+                                </VBox>
+                            </HBox>
+
+                            <HBox spacing="16">
+                                <VBox spacing="5">
+                                    <Label text="Adults" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <Spinner fx:id="resAdults" prefWidth="110" editable="false"/>
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label text="Children" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                    <Spinner fx:id="resChildren" prefWidth="110" editable="false"/>
+                                </VBox>
+                            </HBox>
+
+                            <Label text="Room Selection"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555555;"/>
+                            <HBox spacing="24">
+                                <CheckBox fx:id="resSingleRoom" text="Single Room"/>
+                                <CheckBox fx:id="resDoubleRoom" text="Double Room"/>
+                                <CheckBox fx:id="resDeluxeRoom" text="Deluxe Room"/>
+                            </HBox>
+
+                            <Label text="Add-On Services"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #555555;"/>
+                            <HBox spacing="24">
+                                <CheckBox fx:id="resWifi" text="Wi-Fi"/>
+                                <CheckBox fx:id="resBreakfast" text="Breakfast"/>
+                                <CheckBox fx:id="resParking" text="Parking"/>
+                                <CheckBox fx:id="resSpa" text="Spa"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Price summary -->
+                        <VBox spacing="12" prefWidth="260"
+                              style="-fx-background-color: #ffffff;
+                                     -fx-border-color: #c9a84c;
+                                     -fx-border-width: 1.5;
+                                     -fx-border-radius: 10; -fx-background-radius: 10;
+                                     -fx-padding: 24;">
+                            <Label text="Price Summary"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold;
+                                          -fx-text-fill: #c9a84c; -fx-letter-spacing: 1px;"/>
+                            <Label fx:id="resTotalLabel"
+                                   text="Fill in the form to see pricing."
+                                   wrapText="true"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                            <Separator/>
+                            <Label text="Total: $0"
+                                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #c9a84c;"/>
+                        </VBox>
+                    </HBox>
+
+                    <Label fx:id="resErrorLabel" text="" visible="false"
+                           style="-fx-font-size: 13px;"/>
+
+                    <Button text="Create Reservation" onAction="#handleCreateReservation"
+                            style="-fx-background-color: #c9a84c;
+                                   -fx-text-fill: #ffffff;
+                                   -fx-font-size: 14px; -fx-font-weight: bold;
+                                   -fx-padding: 13 36;
+                                   -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 3: PAYMENTS                    -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Payments">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="Payments"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <HBox spacing="24" alignment="TOP_LEFT">
+
+                        <!-- Bill summary -->
+                        <VBox spacing="10" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #ffffff;
+                                     -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                     -fx-border-radius: 10; -fx-background-radius: 10;
+                                     -fx-padding: 24;">
+                            <Label text="Bill Summary"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;
+                                          -fx-text-fill: #c9a84c;"/>
+                            <Label fx:id="payGuestName" text="Guest: —"
+                                   style="-fx-font-size: 14px; -fx-text-fill: #1a1a1a;"/>
+                            <Label fx:id="payRoomSummary" text="Room: —"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="payBase" text="Base: $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="payWeekendRate" text="Weekend Rate: $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="payAddOns" text="Add-Ons: $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="paySubtotal" text="Subtotal: $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="payTax" text="Tax (13%): $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Label fx:id="payDiscount" text="Discount: $0"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #555555;"/>
+                            <Separator/>
+                            <Label fx:id="payTotal" text="Total: $0"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                            <HBox spacing="24">
+                                <Label fx:id="payPaid" text="Paid: $0"
+                                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+                                <Label fx:id="payOutstanding" text="Outstanding: $0"
+                                       style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #c62828;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Process payment -->
+                        <VBox spacing="16" prefWidth="380"
+                              style="-fx-background-color: #ffffff;
+                                     -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                     -fx-border-radius: 10; -fx-background-radius: 10;
+                                     -fx-padding: 24;">
+                            <Label text="Process Payment"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold;
+                                          -fx-text-fill: #c9a84c;"/>
+                            <VBox spacing="5">
+                                <Label text="Payment Type" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                <ComboBox fx:id="paymentTypeCombo" maxWidth="Infinity"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Amount ($)" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                                <TextField fx:id="paymentAmountField" promptText="0.00"
+                                           style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                                  -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                            </VBox>
+                            <Label fx:id="payErrorLabel" text="" visible="false"
+                                   style="-fx-font-size: 12px;"/>
+                            <VBox spacing="10">
+                                <Button text="Process Payment" onAction="#handleProcessPayment"
+                                        maxWidth="Infinity"
+                                        style="-fx-background-color: #c9a84c;
+                                               -fx-text-fill: #ffffff;
+                                               -fx-font-size: 13px; -fx-font-weight: bold;
+                                               -fx-padding: 10 20;
+                                               -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                <Button text="Process Refund" onAction="#handleProcessRefund"
+                                        maxWidth="Infinity"
+                                        style="-fx-background-color: #ffffff;
+                                               -fx-text-fill: #c9a84c;
+                                               -fx-border-color: #c9a84c;
+                                               -fx-border-width: 1.5;
+                                               -fx-border-radius: 6; -fx-background-radius: 6;
+                                               -fx-font-size: 13px; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Payment history -->
+                    <VBox spacing="10"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 20;">
+                        <Label text="Payment History"
+                               style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                        <TableView fx:id="paymentHistoryTable" prefHeight="200">
+                            <columns>
+                                <TableColumn text="Date" prefWidth="150"/>
+                                <TableColumn text="Type" prefWidth="120"/>
+                                <TableColumn text="Category" prefWidth="140"/>
+                                <TableColumn text="Amount" prefWidth="120"/>
+                                <TableColumn text="Processed By" prefWidth="160"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="No payment history." style="-fx-text-fill: #aaaaaa;"/>
+                            </placeholder>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 4: WAITLIST                    -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Waitlist">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="Waitlist Management"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <HBox spacing="16" alignment="CENTER_LEFT"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 16;">
+                        <Label text="Room Type:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <ComboBox fx:id="waitlistRoomTypeFilter" prefWidth="140"/>
+                        <Label text="From:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <DatePicker fx:id="waitlistDateFrom" prefWidth="160"/>
+                        <Label text="To:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <DatePicker fx:id="waitlistDateTo" prefWidth="160"/>
+                        <Button text="Filter" onAction="#handleWaitlistFilter"
+                                style="-fx-background-color: #ffffff;
+                                       -fx-text-fill: #c9a84c;
+                                       -fx-border-color: #c9a84c;
+                                       -fx-border-width: 1.5;
+                                       -fx-border-radius: 6; -fx-background-radius: 6;
+                                       -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="+ Add to Waitlist" onAction="#handleAddToWaitlist"
+                                style="-fx-background-color: #c9a84c;
+                                       -fx-text-fill: #ffffff;
+                                       -fx-font-size: 13px; -fx-font-weight: bold;
+                                       -fx-padding: 8 20;
+                                       -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    </HBox>
+
+                    <TableView prefHeight="420"
+                               style="-fx-background-color: #ffffff;
+                                      -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                      -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <columns>
+                            <TableColumn text="#" prefWidth="60"/>
+                            <TableColumn text="Guest Name" prefWidth="160"/>
+                            <TableColumn text="Phone" prefWidth="130"/>
+                            <TableColumn text="Room Type" prefWidth="120"/>
+                            <TableColumn text="Check-in" prefWidth="110"/>
+                            <TableColumn text="Check-out" prefWidth="110"/>
+                            <TableColumn text="Added On" prefWidth="110"/>
+                            <TableColumn text="Status" prefWidth="120"/>
+                            <TableColumn text="Actions" prefWidth="150"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="No waitlist entries." style="-fx-text-fill: #aaaaaa;"/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 5: FEEDBACK                    -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Feedback">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="Feedback Management"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <HBox spacing="16" alignment="CENTER_LEFT"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 16;">
+                        <Label text="Rating:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <ComboBox fx:id="feedbackRatingFilter" prefWidth="100"/>
+                        <Label text="Sentiment:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <ComboBox fx:id="feedbackSentimentFilter" prefWidth="130"/>
+                        <Label text="Guest:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <TextField fx:id="feedbackGuestFilter" promptText="Search guest..."
+                                   prefWidth="160"
+                                   style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                          -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Label text="Date:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                        <TextField fx:id="feedbackDateFilter" promptText="MM/YYYY"
+                                   prefWidth="110"
+                                   style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                          -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Button text="Filter" onAction="#handleFeedbackFilter"
+                                style="-fx-background-color: #ffffff;
+                                       -fx-text-fill: #c9a84c;
+                                       -fx-border-color: #c9a84c;
+                                       -fx-border-width: 1.5;
+                                       -fx-border-radius: 6; -fx-background-radius: 6;
+                                       -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"/>
+                    </HBox>
+
+                    <TableView fx:id="feedbackTable" prefHeight="400"
+                               style="-fx-background-color: #ffffff;
+                                      -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                      -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <columns>
+                            <TableColumn text="Reservation" prefWidth="130"/>
+                            <TableColumn text="Guest" prefWidth="160"/>
+                            <TableColumn text="Rating" prefWidth="120"/>
+                            <TableColumn text="Comment" prefWidth="360"/>
+                            <TableColumn text="Date" prefWidth="120"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="No feedback entries." style="-fx-text-fill: #aaaaaa;"/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <!-- ══════════════════════════════════ -->
+        <!-- TAB 6: REPORTS                     -->
+        <!-- ══════════════════════════════════ -->
+        <Tab text="Reports">
+            <ScrollPane fitToWidth="true"
+                        style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;">
+                <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+                    <Label text="Reports"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+                    <!-- Reports sub-tabs -->
+                    <TabPane tabClosingPolicy="UNAVAILABLE"
+                             style="-fx-tab-min-width: 120;">
+
+                        <!-- Revenue -->
+                        <Tab text="Revenue">
+                            <VBox spacing="20"
+                                  style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                                <HBox spacing="16" alignment="CENTER_LEFT"
+                                      style="-fx-background-color: #ffffff;
+                                             -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                             -fx-border-radius: 10; -fx-background-radius: 10;
+                                             -fx-padding: 16;">
+                                    <Label text="Period:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <ComboBox fx:id="revPeriodFilter" prefWidth="120"/>
+                                    <Label text="From:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="revDateFrom" prefWidth="160"/>
+                                    <Label text="To:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="revDateTo" prefWidth="160"/>
+                                    <Label text="Room Type:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <ComboBox fx:id="revRoomTypeFilter" prefWidth="120"/>
+                                    <Button text="Generate" onAction="#handleGenerateRevenue"
+                                            style="-fx-background-color: #c9a84c;
+                                                   -fx-text-fill: #ffffff;
+                                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                                   -fx-padding: 8 20;
+                                                   -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                </HBox>
+                                <TableView prefHeight="360"
+                                           style="-fx-background-color: #ffffff;
+                                                  -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                                  -fx-border-radius: 10;">
+                                    <columns>
+                                        <TableColumn text="Period" prefWidth="160"/>
+                                        <TableColumn text="Reservations" prefWidth="140"/>
+                                        <TableColumn text="Subtotal" prefWidth="140"/>
+                                        <TableColumn text="Tax" prefWidth="120"/>
+                                        <TableColumn text="Discounts" prefWidth="130"/>
+                                        <TableColumn text="Total" prefWidth="140"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Click Generate to load report."
+                                               style="-fx-text-fill: #aaaaaa;"/>
+                                    </placeholder>
+                                </TableView>
+                            </VBox>
+                        </Tab>
+
+                        <!-- Occupancy -->
+                        <Tab text="Occupancy">
+                            <VBox spacing="20"
+                                  style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                                <HBox spacing="16" alignment="CENTER_LEFT"
+                                      style="-fx-background-color: #ffffff;
+                                             -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                             -fx-border-radius: 10; -fx-background-radius: 10;
+                                             -fx-padding: 16;">
+                                    <Label text="Period:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <ComboBox fx:id="occPeriodFilter" prefWidth="120"/>
+                                    <Label text="From:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="occDateFrom" prefWidth="160"/>
+                                    <Label text="To:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="occDateTo" prefWidth="160"/>
+                                    <Label text="Room Type:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <ComboBox fx:id="occRoomTypeFilter" prefWidth="120"/>
+                                    <Button text="Generate" onAction="#handleGenerateOccupancy"
+                                            style="-fx-background-color: #c9a84c;
+                                                   -fx-text-fill: #ffffff;
+                                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                                   -fx-padding: 8 20;
+                                                   -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                </HBox>
+                                <TableView prefHeight="360"
+                                           style="-fx-background-color: #ffffff;
+                                                  -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                                  -fx-border-radius: 10;">
+                                    <columns>
+                                        <TableColumn text="Date" prefWidth="180"/>
+                                        <TableColumn text="Rooms Available" prefWidth="200"/>
+                                        <TableColumn text="Rooms Occupied" prefWidth="200"/>
+                                        <TableColumn text="Occupancy %" prefWidth="180"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Click Generate to load report."
+                                               style="-fx-text-fill: #aaaaaa;"/>
+                                    </placeholder>
+                                </TableView>
+                            </VBox>
+                        </Tab>
+
+                        <!-- Activity Log -->
+                        <Tab text="Activity Log">
+                            <VBox spacing="20"
+                                  style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                                <HBox spacing="16" alignment="CENTER_LEFT"
+                                      style="-fx-background-color: #ffffff;
+                                             -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                             -fx-border-radius: 10; -fx-background-radius: 10;
+                                             -fx-padding: 16;">
+                                    <Label text="From:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="actDateFrom" prefWidth="160"/>
+                                    <Label text="To:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <DatePicker fx:id="actDateTo" prefWidth="160"/>
+                                    <Label text="Actor:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <TextField fx:id="actActorFilter" promptText="e.g. John Smith"
+                                               prefWidth="160"
+                                               style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                                      -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                    <Label text="Action:" style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+                                    <ComboBox fx:id="actActionFilter" prefWidth="140"/>
+                                    <Button text="Generate" onAction="#handleGenerateActivity"
+                                            style="-fx-background-color: #c9a84c;
+                                                   -fx-text-fill: #ffffff;
+                                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                                   -fx-padding: 8 20;
+                                                   -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                </HBox>
+                                <TableView fx:id="activityTable" prefHeight="360"
+                                           style="-fx-background-color: #ffffff;
+                                                  -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                                  -fx-border-radius: 10;">
+                                    <columns>
+                                        <TableColumn text="Timestamp" prefWidth="180"/>
+                                        <TableColumn text="Actor" prefWidth="140"/>
+                                        <TableColumn text="Action" prefWidth="140"/>
+                                        <TableColumn text="Entity Type" prefWidth="130"/>
+                                        <TableColumn text="Entity ID" prefWidth="110"/>
+                                        <TableColumn text="Message" prefWidth="280"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Click Generate to load logs."
+                                               style="-fx-text-fill: #aaaaaa;"/>
+                                    </placeholder>
+                                </TableView>
+                            </VBox>
+                        </Tab>
+
+                    </TabPane>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+    </TabPane>
+
+</AnchorPane>

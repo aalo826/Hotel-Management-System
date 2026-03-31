@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+    <persistence-unit name="HotelPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Guest</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Room</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Reservation</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.ReservationRoom</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Payment</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.AddOn</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Feedback</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.User</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Log</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/registrationloginFX"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="080611"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

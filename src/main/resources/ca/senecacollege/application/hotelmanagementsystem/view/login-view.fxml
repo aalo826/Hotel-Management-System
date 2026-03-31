@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ca.senecacollege.application.hotelmanagementsystem.controller.LoginController"
+            prefWidth="1400" prefHeight="900"
+            style="-fx-background-color: #ffffff;">
+
+    <VBox alignment="CENTER" spacing="32"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <!-- Hotel name -->
+        <VBox alignment="CENTER" spacing="6">
+            <Label text="AURORA GRAND HOTEL"
+                   style="-fx-font-size: 32px; -fx-font-weight: bold;
+                          -fx-text-fill: #1a1a1a; -fx-letter-spacing: 4px;"/>
+            <Label text="Staff Login Portal"
+                   style="-fx-font-size: 14px; -fx-text-fill: #c9a84c;
+                          -fx-letter-spacing: 2px;"/>
+        </VBox>
+
+        <!-- Divider line -->
+        <Region prefWidth="80" prefHeight="2"
+                style="-fx-background-color: #c9a84c;"/>
+
+        <!-- Login card -->
+        <VBox spacing="20" maxWidth="420"
+              style="-fx-background-color: #ffffff;
+                     -fx-border-color: #e8e0d0;
+                     -fx-border-width: 1.5;
+                     -fx-border-radius: 12;
+                     -fx-background-radius: 12;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 4);
+                     -fx-padding: 40;">
+
+            <Label text="Sign In"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+
+            <!-- Username -->
+            <VBox spacing="6">
+                <Label text="Username"
+                       style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-letter-spacing: 1px;"/>
+                <TextField fx:id="usernameField"
+                           promptText="Enter your username"
+                           style="-fx-background-color: #fafafa;
+                                  -fx-border-color: #e0d8cc;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;
+                                  -fx-padding: 12 14;
+                                  -fx-font-size: 14px;
+                                  -fx-text-fill: #1a1a1a;"/>
+            </VBox>
+
+            <!-- Password -->
+            <VBox spacing="6">
+                <Label text="Password"
+                       style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-letter-spacing: 1px;"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Enter your password"
+                               style="-fx-background-color: #fafafa;
+                                      -fx-border-color: #e0d8cc;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 12 14;
+                                      -fx-font-size: 14px;
+                                      -fx-text-fill: #1a1a1a;"/>
+            </VBox>
+
+            <!-- Status label -->
+            <Label fx:id="statusLabel" text="" visible="false"
+                   style="-fx-text-fill: #2e7d32; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+
+            <!-- Error label -->
+            <Label fx:id="errorLabel" text="" visible="false"
+                   wrapText="true"
+                   style="-fx-text-fill: #c62828; -fx-font-size: 13px;"/>
+
+            <!-- Forgot password -->
+            <Label text="Forgot Password?"
+                   onMouseClicked="#handleForgotPassword"
+                   style="-fx-text-fill: #c9a84c; -fx-font-size: 12px;
+                          -fx-underline: true; -fx-cursor: hand;"/>
+
+            <!-- Login button -->
+            <Button text="Sign In"
+                    onAction="#handleLogin"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #ffffff;
+                           -fx-text-fill: #c9a84c;
+                           -fx-border-color: #c9a84c;
+                           -fx-border-width: 1.5;
+                           -fx-border-radius: 8;
+                           -fx-background-radius: 8;
+                           -fx-font-size: 14px;
+                           -fx-font-weight: bold;
+                           -fx-padding: 13 0;
+                           -fx-cursor: hand;"/>
+
+            <!-- Back to kiosk -->
+            <Button text="Back to Kiosk"
+                    onAction="#handleBackToKiosk"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #f0ebe3;
+                           -fx-text-fill: #555555;
+                           -fx-border-radius: 8;
+                           -fx-background-radius: 8;
+                           -fx-font-size: 13px;
+                           -fx-padding: 11 0;
+                           -fx-cursor: hand;"/>
+        </VBox>
+
+        <Label text="Aurora Grand Hotel Management System v2.0"
+               style="-fx-text-fill: #cccccc; -fx-font-size: 11px;"/>
+    </VBox>
+
+</AnchorPane>
