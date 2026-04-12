@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true"
+            style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ca.senecacollege.application.hotelmanagementsystem.controller.FeedbackAdminController">
+
+    <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"
+               text="Feedback Management" />
+
+        <HBox alignment="CENTER_LEFT" spacing="16"
+              style="-fx-background-color: #ffffff;
+                     -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                     -fx-border-radius: 10; -fx-background-radius: 10;
+                     -fx-padding: 16;">
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;"
+                   text="Rating:" />
+            <ComboBox fx:id="feedbackRatingFilter" prefWidth="100" />
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;"
+                   text="Sentiment:" />
+            <ComboBox fx:id="feedbackSentimentFilter" prefWidth="130" />
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;"
+                   text="Guest:" />
+            <TextField fx:id="feedbackGuestFilter" prefWidth="160" promptText="Search guest..."
+                       style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                              -fx-border-radius: 6; -fx-background-radius: 6;" />
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;"
+                   text="Date:" />
+            <TextField fx:id="feedbackDateFilter" prefWidth="110" promptText="MM/YYYY"
+                       style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                              -fx-border-radius: 6; -fx-background-radius: 6;" />
+            <Button onAction="#handleFeedbackFilter"
+                    style="-fx-background-color: #ffffff; -fx-text-fill: #c9a84c;
+                           -fx-border-color: #c9a84c; -fx-border-width: 1.5;
+                           -fx-border-radius: 6; -fx-background-radius: 6;
+                           -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                    text="Filter" />
+            <HBox spacing="10">
+                <Button onAction="#handleExportCSV"
+                        style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                   -fx-border-color: #e0d8cc; -fx-border-width: 1;
+                   -fx-border-radius: 6; -fx-background-radius: 6;
+                   -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                        text="Export CSV" />
+                <Button onAction="#handleExportTXT"
+                        style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                   -fx-border-color: #e0d8cc; -fx-border-width: 1;
+                   -fx-border-radius: 6; -fx-background-radius: 6;
+                   -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                        text="Export TXT" />
+            </HBox>
+        </HBox>
+
+        <TableView fx:id="feedbackTable" prefHeight="400"
+                   style="-fx-background-color: #ffffff;
+                          -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                          -fx-border-radius: 10; -fx-background-radius: 10;">
+            <columns>
+                <TableColumn fx:id="fbColRes"     prefWidth="130" text="Reservation" />
+                <TableColumn fx:id="fbColGuest"   prefWidth="160" text="Guest" />
+                <TableColumn fx:id="fbColRating"  prefWidth="120" text="Rating" />
+                <TableColumn fx:id="fbColComment" prefWidth="360" text="Comment" />
+                <TableColumn fx:id="fbColDate"    prefWidth="120" text="Date" />
+            </columns>
+            <placeholder>
+                <Label style="-fx-text-fill: #aaaaaa;"
+                       text="No feedback entries." />
+            </placeholder>
+        </TableView>
+
+    </VBox>
+</ScrollPane>

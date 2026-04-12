@@ -12,6 +12,7 @@
         <class>ca.senecacollege.application.hotelmanagementsystem.model.Feedback</class>
         <class>ca.senecacollege.application.hotelmanagementsystem.model.User</class>
         <class>ca.senecacollege.application.hotelmanagementsystem.model.Log</class>
+        <class>ca.senecacollege.application.hotelmanagementsystem.model.Waitlist</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

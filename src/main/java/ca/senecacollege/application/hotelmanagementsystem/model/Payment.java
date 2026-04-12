@@ -6,11 +6,12 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Payments")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "res_id")
     private Reservation reservation;
 
@@ -23,51 +24,52 @@ public class Payment {
         this.paymentDate = LocalDate.now();
     }
 
-    public int getId() {
-        return id;
+    public String getGuestName() {
+        if (reservation != null && reservation.getGuest() != null) {
+            String firstName = reservation.getGuest().getFirstName();
+            String lastName = reservation.getGuest().getLastName();
+            return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+        }
+        return "N/A";
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getPhone() {
+        if (reservation != null && reservation.getGuest() != null) {
+            return reservation.getGuest().getPhone();
+        }
+        return "N/A";
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public String getRoomType() {
+        if (reservation != null && reservation.getRooms() != null && !reservation.getRooms().isEmpty()) {
+            return reservation.getRooms().get(0).getType();
+        }
+        return "Standard";
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public LocalDate getCheckInDate() {
+        return reservation != null ? reservation.getCheckInDate() : null;
     }
 
-    public double getAmount() {
-        return amount;
+    public LocalDate getCheckOutDate() {
+        return reservation != null ? reservation.getCheckOutDate() : null;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
-    }
+    public Reservation getReservation() { return reservation; }
+    public void setReservation(Reservation reservation) { this.reservation = reservation; }
 
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
-    }
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
 
-    public String getMethod() {
-        return method;
-    }
+    public LocalDate getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(LocalDate paymentDate) { this.paymentDate = paymentDate; }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+    public String getMethod() { return method; }
+    public void setMethod(String method) { this.method = method; }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

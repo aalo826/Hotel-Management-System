@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import ca.senecacollege.application.hotelmanagementsystem.service.FeedbackService;
 
 public class FeedbackController {
 
@@ -24,6 +25,7 @@ public class FeedbackController {
 
     // State
     private int selectedRating = 0;
+    private final FeedbackService feedbackService = new FeedbackService();
 
     private static final String STAR_FILLED   = "\u2605";
     private static final String STAR_EMPTY    = "\u2606";
@@ -70,9 +72,22 @@ public class FeedbackController {
         }
         errorLabel.setVisible(false);
 
-        // Show confirmation screen
-        feedbackFormPane.setVisible(false);
-        feedbackConfirmedPane.setVisible(true);
+        try {
+            // Retrieve the text from your TextArea
+            String guestComment = commentsArea.getText();
+
+            // SAVE DATA: Use the service to persist to the database
+            // Note: Replace 'null' with actual Guest/Reservation objects if you have them in session
+            feedbackService.submitFeedback(selectedRating, guestComment, null, null);
+
+            // UI Transition
+            feedbackFormPane.setVisible(false);
+            feedbackConfirmedPane.setVisible(true);
+
+        } catch (Exception e) {
+            errorLabel.setText("System error: Could not save feedback.");
+            errorLabel.setVisible(true);
+        }
     }
 
     // Back to Welcome

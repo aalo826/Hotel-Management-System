@@ -628,6 +628,8 @@
                 <Label text="Price Summary"
                        style="-fx-font-size: 13px; -fx-font-weight: bold;
                               -fx-text-fill: #c9a84c;"/>
+                <Label fx:id="summaryPricingStrategy" text=""
+                       style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
                 <Label fx:id="summarySubtotal" text="Subtotal: $0.00"
                        style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
                 <Label fx:id="summaryTax" text="Tax: $0.00"

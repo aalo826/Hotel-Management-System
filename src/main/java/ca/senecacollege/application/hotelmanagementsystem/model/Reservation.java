@@ -28,11 +28,11 @@ public class Reservation {
     private int numberOfAdults;
     private int numberOfChildren;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "guest_id")
     private Guest guest;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Reservations_Rooms",
             joinColumns = @JoinColumn(name = "res_id"),
@@ -40,10 +40,23 @@ public class Reservation {
     )
     private List<Room> rooms = new ArrayList<>();
 
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
-    private Payment payment;
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Payment> payments = new ArrayList<>();
 
     public Reservation() {}
+
+    public int getTotalGuests() {
+        return numberOfAdults + numberOfChildren;
+    }
+
+    public boolean isEligibleForFeedback() {
+        return "Checked Out".equalsIgnoreCase(this.status);
+    }
+
+
+    public String getGuestFullName() {
+        return (guest != null) ? guest.getFirstName() + " " + guest.getLastName() : "No Guest Assigned";
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -72,6 +85,6 @@ public class Reservation {
     public List<Room> getRooms() { return rooms; }
     public void setRooms(List<Room> rooms) { this.rooms = rooms; }
 
-    public Payment getPayment() { return payment; }
-    public void setPayment(Payment payment) { this.payment = payment; }
+    public List<Payment> getPayments() { return payments; }
+    public void setPayments(List<Payment> payments) { this.payments = payments; }
 }

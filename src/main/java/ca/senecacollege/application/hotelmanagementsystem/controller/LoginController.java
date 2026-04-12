@@ -1,82 +1,114 @@
 package ca.senecacollege.application.hotelmanagementsystem.controller;
 
+import ca.senecacollege.application.hotelmanagementsystem.model.User;
+import ca.senecacollege.application.hotelmanagementsystem.repository.GenericRepository;
+import ca.senecacollege.application.hotelmanagementsystem.service.LogService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.util.List;
 
 public class LoginController {
 
-    // Form Fields
+    // Fields
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
     @FXML private Label statusLabel;
 
-    // Login Handler
+    // Services
+    private final GenericRepository<User> userRepository = new GenericRepository<>(User.class);
+    private final LogService logService = new LogService();
+
+    // Login
     @FXML
     public void handleLogin() {
-        String user = usernameField.getText().trim();
-        String pass = passwordField.getText().trim();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText();
 
-        if (user.isEmpty() || pass.isEmpty()) {
-            errorLabel.setText("Please enter both username and password.");
-            errorLabel.setVisible(true);
+        if (username.isEmpty() || password.isEmpty()) {
+            showError("Please enter all fields.");
             return;
         }
 
-        if (user.equals("admin") && pass.equals("123")) {
-            // Show success message then navigate to admin dashboard
-            statusLabel.setText("Login Successful! Entering Dashboard..");
-            statusLabel.setVisible(true);
-            errorLabel.setVisible(false);
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "/ca/senecacollege/application/hotelmanagementsystem/view/admin-view.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setTitle("Aurora Grand Hotel - Admin Dashboard");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                errorLabel.setText("Failed to load dashboard: " + e.getMessage());
-                errorLabel.setVisible(true);
+        User targetUser = null;
+        List<User> users = userRepository.findAll();
+        for (User u : users) {
+            if (u.getUsername().equalsIgnoreCase(username)) {
+                targetUser = u;
+                break;
             }
+        }
 
+        if (targetUser != null && BCrypt.checkpw(password, targetUser.getPassword())) {
+            SessionManager.setCurrentUser(targetUser);
+            logService.log(username, "LOGIN", "Successful login", targetUser);
+            navigateToAdminDashboard();
         } else {
-            errorLabel.setText("Login Failed! Username or password are incorrect");
-            errorLabel.setVisible(true);
-            if (statusLabel != null) statusLabel.setVisible(false);
+            showError("Invalid username or password.");
+            // Pass null user — we don't have a valid user object for failed attempts
+            logService.log(username, "LOGIN_FAILED", "Failed login attempt for username: " + username, null);
         }
     }
 
-    // Forgot Password Handler
+    // Forgot Password
     @FXML
-    public void handleForgotPassword() {
-        errorLabel.setStyle("-fx-text-fill: #2563eb;");
-        errorLabel.setText("Please contact your system administrator.");
+    private void handleForgotPassword(MouseEvent event) {
+        showError("Please contact the IT department to reset your password.");
+    }
+
+    // Back to Kiosk
+    @FXML
+    private void handleBackToKiosk() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/ca/senecacollege/application/hotelmanagementsystem/view/kiosk-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root, 1400, 900));
+            stage.show();
+        } catch (IOException e) {
+            showError("Navigation failed: " + e.getMessage());
+        }
+    }
+
+    // Helpers
+    private void showError(String message) {
+        errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
 
-    // Back to Kiosk Handler
-    @FXML
-    public void handleBackToKiosk() {
+    private void navigateToAdminDashboard() {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource(
-                    "/ca/senecacollege/application/hotelmanagementsystem/view/kiosk-view.fxml"));
-            javafx.stage.Stage stage = (javafx.stage.Stage) usernameField.getScene().getWindow();
-            javafx.scene.Scene scene = new javafx.scene.Scene(loader.load(), stage.getWidth(), stage.getHeight());
-            stage.setTitle("Aurora Grand Hotel");
-            stage.setScene(scene);
+            String fxmlPath = "/ca/senecacollege/application/hotelmanagementsystem/view/admin-view.fxml";
+            java.net.URL resource = getClass().getResource(fxmlPath);
+
+            if (resource == null) {
+                fxmlPath = "ca/senecacollege/application/hotelmanagementsystem/view/admin-view.fxml";
+                resource = getClass().getClassLoader().getResource(fxmlPath);
+            }
+
+            if (resource == null) {
+                showError("Cannot find admin-view.fxml.");
+                return;
+            }
+
+            Parent root = FXMLLoader.load(resource);
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root, 1400, 900));
+            stage.setTitle("Admin Dashboard - Aurora Grand Hotel");
+            stage.centerOnScreen();
             stage.show();
-        } catch (java.io.IOException e) {
-            System.err.println("Failed to load kiosk: " + e.getMessage());
+
+        } catch (IOException e) {
+            showError("Failed to load Admin Dashboard: " + e.getMessage());
         }
     }
 }

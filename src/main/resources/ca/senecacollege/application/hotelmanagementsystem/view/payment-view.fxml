@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true"
+            style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ca.senecacollege.application.hotelmanagementsystem.controller.PaymentController">
+
+    <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"
+               text="Payments" />
+
+        <HBox alignment="TOP_LEFT" spacing="24">
+
+            <!-- Bill summary -->
+            <VBox spacing="10"
+                  style="-fx-background-color: #ffffff;
+                         -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                         -fx-border-radius: 10; -fx-background-radius: 10;
+                         -fx-padding: 24;"
+                  HBox.hgrow="ALWAYS">
+                <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #c9a84c;"
+                       text="Bill Summary" />
+                <Label fx:id="payGuestName"   style="-fx-font-size: 14px; -fx-text-fill: #1a1a1a;" text="Guest: —" />
+                <Label fx:id="payRoomSummary" style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Room: —" />
+                <Label fx:id="payBase"        style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Base: $0" />
+                <Label fx:id="payWeekendRate" style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Weekend Rate: $0" />
+                <Label fx:id="payAddOns"      style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Add-Ons: $0" />
+                <Label fx:id="paySubtotal"    style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Subtotal: $0" />
+                <Label fx:id="payTax"         style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Tax (13%): $0" />
+                <Label fx:id="payDiscount"    style="-fx-font-size: 13px; -fx-text-fill: #555555;" text="Discount: $0" />
+                <Separator />
+                <Label fx:id="payTotal"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"
+                       text="Total: $0" />
+                <HBox spacing="24">
+                    <Label fx:id="payPaid"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"
+                           text="Paid: $0" />
+                    <Label fx:id="payOutstanding"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #c62828;"
+                           text="Outstanding: $0" />
+                </HBox>
+            </VBox>
+
+            <!-- Process payment -->
+            <VBox prefWidth="380" spacing="16"
+                  style="-fx-background-color: #ffffff;
+                         -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                         -fx-border-radius: 10; -fx-background-radius: 10;
+                         -fx-padding: 24;">
+                <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #c9a84c;"
+                       text="Process Payment" />
+                <VBox spacing="5">
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #888888;" text="Payment Type" />
+                    <ComboBox fx:id="paymentTypeCombo" maxWidth="Infinity" />
+                </VBox>
+                <VBox spacing="5">
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #888888;" text="Amount ($)" />
+                    <TextField fx:id="paymentAmountField" promptText="0.00"
+                               style="-fx-padding: 9 12; -fx-border-color: #e0d8cc;
+                                      -fx-border-radius: 6; -fx-background-radius: 6;" />
+                </VBox>
+                <Label fx:id="payErrorLabel" style="-fx-font-size: 12px;" text="" visible="false" />
+                <VBox spacing="10">
+                    <Button maxWidth="Infinity" onAction="#handleProcessPayment"
+                            style="-fx-background-color: #c9a84c; -fx-text-fill: #ffffff;
+                                   -fx-font-size: 13px; -fx-font-weight: bold;
+                                   -fx-padding: 10 20; -fx-background-radius: 6; -fx-cursor: hand;"
+                            text="Process Payment" />
+                    <Button maxWidth="Infinity" onAction="#handleProcessRefund"
+                            style="-fx-background-color: #ffffff; -fx-text-fill: #c9a84c;
+                                   -fx-border-color: #c9a84c; -fx-border-width: 1.5;
+                                   -fx-border-radius: 6; -fx-background-radius: 6;
+                                   -fx-font-size: 13px; -fx-padding: 10 20; -fx-cursor: hand;"
+                            text="Process Refund" />
+                </VBox>
+            </VBox>
+
+        </HBox>
+
+        <!-- Payment history -->
+        <VBox spacing="10"
+              style="-fx-background-color: #ffffff;
+                     -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                     -fx-border-radius: 10; -fx-background-radius: 10;
+                     -fx-padding: 20;">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"
+                   text="Payment History" />
+            <TableView fx:id="paymentHistoryTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="payColDate"     prefWidth="150" text="Date" />
+                    <TableColumn fx:id="payColType"     prefWidth="120" text="Type" />
+                    <TableColumn fx:id="payColCategory" prefWidth="140" text="Category" />
+                    <TableColumn fx:id="payColAmount"   prefWidth="120" text="Amount" />
+                    <TableColumn fx:id="payColBy"       prefWidth="160" text="Processed By" />
+                </columns>
+                <placeholder>
+                    <Label style="-fx-text-fill: #aaaaaa;" text="No payment history." />
+                </placeholder>
+            </TableView>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

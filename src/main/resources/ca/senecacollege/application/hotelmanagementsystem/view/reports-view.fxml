@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true"
+            style="-fx-background-color: #f7f5f0; -fx-background: #f7f5f0;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ca.senecacollege.application.hotelmanagementsystem.controller.ReportsController">
+
+    <VBox spacing="24" style="-fx-background-color: #f7f5f0; -fx-padding: 32;">
+
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"
+               text="Reports" />
+
+        <!-- Reports sub-tabs -->
+        <TabPane style="-fx-tab-min-width: 120;" tabClosingPolicy="UNAVAILABLE">
+
+            <!-- ── Revenue ── -->
+            <Tab text="Revenue">
+                <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                    <HBox alignment="CENTER_LEFT" spacing="16"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 16;">
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Period:" />
+                        <ComboBox fx:id="revPeriodFilter" prefWidth="120" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="From:" />
+                        <DatePicker fx:id="revDateFrom" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="To:" />
+                        <DatePicker fx:id="revDateTo" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Room Type:" />
+                        <ComboBox fx:id="revRoomTypeFilter" prefWidth="120" />
+                        <Button onAction="#handleGenerateRevenue"
+                                style="-fx-background-color: #c9a84c; -fx-text-fill: #ffffff;
+                                       -fx-font-size: 13px; -fx-font-weight: bold;
+                                       -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;"
+                                text="Generate" />
+                        <Button onAction="#handleExportRevenueCSV"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                -fx-border-color: #e0d8cc; -fx-border-width: 1;
+                                -fx-border-radius: 6; -fx-background-radius: 6;
+                                -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export CSV" />
+                        <Button onAction="#handleExportRevenueTXT"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                -fx-border-color: #e0d8cc; -fx-border-width: 1; -fx-border-radius: 6;
+                                -fx-background-radius: 6; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export TXT" />
+
+                    </HBox>
+                    <TableView fx:id="revenueTable" prefHeight="360"
+                               style="-fx-background-color: #ffffff;
+                                      -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                      -fx-border-radius: 10;">
+                        <columns>
+                            <TableColumn fx:id="revColPeriod"   prefWidth="160" text="Period" />
+                            <TableColumn fx:id="revColCount"    prefWidth="140" text="Reservations" />
+                            <TableColumn fx:id="revColSubtotal" prefWidth="140" text="Subtotal" />
+                            <TableColumn fx:id="revColTax"      prefWidth="120" text="Tax" />
+                            <TableColumn fx:id="revColDiscount" prefWidth="130" text="Discounts" />
+                            <TableColumn fx:id="revColTotal"    prefWidth="140" text="Total" />
+                        </columns>
+                        <placeholder>
+                            <Label style="-fx-text-fill: #aaaaaa;" text="Click Generate to load report." />
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ── Occupancy ── -->
+            <Tab text="Occupancy">
+                <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                    <HBox alignment="CENTER_LEFT" spacing="16"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 16;">
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Period:" />
+                        <ComboBox fx:id="occPeriodFilter" prefWidth="120" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="From:" />
+                        <DatePicker fx:id="occDateFrom" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="To:" />
+                        <DatePicker fx:id="occDateTo" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Room Type:" />
+                        <ComboBox fx:id="occRoomTypeFilter" prefWidth="120" />
+                        <Button onAction="#handleGenerateOccupancy"
+                                style="-fx-background-color: #c9a84c; -fx-text-fill: #ffffff;
+                                       -fx-font-size: 13px; -fx-font-weight: bold;
+                                       -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;"
+                                text="Generate" />
+                        <Button onAction="#handleExportOccupancyCSV"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                -fx-border-color: #e0d8cc; -fx-border-width: 1; -fx-border-radius: 6;
+                                -fx-background-radius: 6; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export CSV" />
+                        <Button onAction="#handleExportOccupancyTXT"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                -fx-border-color: #e0d8cc; -fx-border-width: 1; -fx-border-radius: 6;
+                                -fx-background-radius: 6; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export TXT" />
+                    </HBox>
+                    <TableView fx:id="occupancyTable" prefHeight="360"
+                               style="-fx-background-color: #ffffff;
+                                      -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                      -fx-border-radius: 10;">
+                        <columns>
+                            <TableColumn fx:id="occColDate"  prefWidth="180" text="Date" />
+                            <TableColumn fx:id="occColAvail" prefWidth="200" text="Rooms Available" />
+                            <TableColumn fx:id="occColOcc"   prefWidth="200" text="Rooms Occupied" />
+                            <TableColumn fx:id="occColPct"   prefWidth="180" text="Occupancy %" />
+                        </columns>
+                        <placeholder>
+                            <Label style="-fx-text-fill: #aaaaaa;" text="Click Generate to load report." />
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- ── Activity Log ── -->
+            <Tab text="Activity Log">
+                <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #f7f5f0;">
+                    <HBox alignment="CENTER_LEFT" spacing="16"
+                          style="-fx-background-color: #ffffff;
+                                 -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                 -fx-border-radius: 10; -fx-background-radius: 10;
+                                 -fx-padding: 16;">
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="From:" />
+                        <DatePicker fx:id="actDateFrom" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="To:" />
+                        <DatePicker fx:id="actDateTo" prefWidth="160" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Actor:" />
+                        <TextField fx:id="actActorFilter" prefWidth="160" promptText="e.g. John Smith"
+                                   style="-fx-padding: 8 12; -fx-border-color: #e0d8cc;
+                                          -fx-border-radius: 6; -fx-background-radius: 6;" />
+                        <Label style="-fx-font-size: 13px; -fx-text-fill: #888888;" text="Action:" />
+                        <ComboBox fx:id="actActionFilter" prefWidth="140" />
+                        <Button onAction="#handleGenerateActivity"
+                                style="-fx-background-color: #c9a84c; -fx-text-fill: #ffffff;
+                                       -fx-font-size: 13px; -fx-font-weight: bold;
+                                       -fx-padding: 8 20; -fx-background-radius: 6; -fx-cursor: hand;"
+                                text="Generate" />
+                        <Button onAction="#handleExportActivityCSV"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                -fx-border-color: #e0d8cc; -fx-border-width: 1; -fx-border-radius: 6;
+                                -fx-background-radius: 6; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export CSV" />
+                        <Button onAction="#handleExportActivityTXT"
+                                style="-fx-background-color: #fafafa; -fx-text-fill: #555555;
+                                fx-border-color: #e0d8cc; -fx-border-width: 1; -fx-border-radius: 6;
+                                -fx-background-radius: 6; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;"
+                                text="Export TXT" />
+                    </HBox>
+                    <TableView fx:id="activityTable" prefHeight="360"
+                               style="-fx-background-color: #ffffff;
+                                      -fx-border-color: #e8e0d0; -fx-border-width: 1;
+                                      -fx-border-radius: 10;">
+                        <columns>
+                            <TableColumn fx:id="actColTimestamp" prefWidth="180" text="Timestamp" />
+                            <TableColumn fx:id="actColActor"     prefWidth="140" text="Actor" />
+                            <TableColumn fx:id="actColAction"    prefWidth="140" text="Action" />
+                            <TableColumn fx:id="actColEntity"    prefWidth="130" text="Entity Type" />
+                            <TableColumn fx:id="actColEntityId"  prefWidth="110" text="Entity ID" />
+                            <TableColumn fx:id="actColMessage"   prefWidth="280" text="Message" />
+                        </columns>
+                        <placeholder>
+                            <Label style="-fx-text-fill: #aaaaaa;" text="Click Generate to load logs." />
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </VBox>
+</ScrollPane>
