@@ -1,4 +1,4 @@
-# Hotel Reservation System (WIP) ETA Apr 6th
+# Hotel Reservation System
 
 ## Overview
 A desktop-based hotel reservation and billing system built to replace manual booking processes with a structured, efficient, and secure solution.
